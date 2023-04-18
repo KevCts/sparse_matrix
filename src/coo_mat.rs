@@ -20,10 +20,12 @@ impl CooMat {
             Err("Index out of bound")
         }
         else {
-            self.coordinates
-                .entry((i, j))
-                .and_modify(|a| *a += value)
-                .or_insert(value);
+            if value !=0. {
+                self.coordinates
+                    .entry((i, j))
+                    .and_modify(|a| *a += value)
+                    .or_insert(value);
+            }
             Ok(self)
         }
     }

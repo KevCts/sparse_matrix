@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+#[derive(Debug)]
 pub struct CooMat {
     rows:usize,
     columns:usize,

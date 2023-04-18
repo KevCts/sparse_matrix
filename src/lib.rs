@@ -1,1 +1,1 @@
-mod coo_mat;
+pub mod coo_mat;

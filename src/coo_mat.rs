@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, vec};
 
 #[derive(Debug)]
 pub struct CooMat {
@@ -28,6 +28,16 @@ impl CooMat {
             }
             Ok(self)
         }
+    }
+    pub fn to_dense(&self) -> Vec<Vec<f32>> {
+        let mut dense = vec![];
+        for i in 0..self.rows{
+            dense.push(vec![]);
+            for j in 0..self.columns{
+                dense[i].push(self[(i,j)])
+            }
+        }
+        dense
     }
 }
 

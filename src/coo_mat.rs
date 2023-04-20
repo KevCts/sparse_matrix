@@ -68,7 +68,7 @@ impl CooMat {
             let mut x = CooMat::new(self.rows, 1);
 
             for i in 0..self.rows{
-                x.add_value(i, 1, 0.).unwrap();
+                x.add_value(i, 0, 0.).unwrap();
             }
 
             let mut r = (b.clone() - (self.clone()*x.clone()).unwrap()).unwrap();

@@ -1,9 +1,10 @@
 pub mod matrix;
+pub mod vector;
 
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
-    use crate::matrix::{coo_mat::CooMat, csr_mat::CsrMat};
+    use crate::{matrix::{coo_mat::CooMat, csr_mat::CsrMat}, vector::Vector};
 
     #[test]
     fn create_coo_mat() {
@@ -20,10 +21,10 @@ mod tests {
     #[test]
     fn coo_to_csr() {
         let mut mat = CooMat::new(2, 2);
-        mat.add(0, 0, 1.);
-        mat.add(0, 1, 2.);
         mat.add(1, 0, 3.);
         mat.add(1, 1, 4.);
+        mat.add(0, 0, 1.);
+        mat.add(0, 1, 2.);
         assert_eq!(mat.to_csr(),CsrMat { rows : 2, columns : 2, values : vec![1., 2., 3., 4.], columns_index : vec![0,1,0,1], rows_index : vec![0,2,4] });
     }
 
@@ -35,7 +36,28 @@ mod tests {
         mat.add(1, 0, 3.);
         mat.add(1, 1, 4.);
         let csrmat = mat.to_csr();
-        let res = csrmat * vec![0.,1.];
-        assert_eq!(res, Ok(vec![2., 4.]))
+        let res = csrmat * Vector { values : vec![0.,1.]};
+        assert_eq!(res, Ok(Vector { values : vec![2., 4.]}))
+    }
+
+    #[test]
+    fn add_vectors() {
+        let vec1 = Vector {values : vec![1.,1.]};
+        let vec2 = Vector {values : vec![1.,2.]};
+        assert_eq!(vec1 + vec2, Ok(Vector{values : vec![2., 3.]}))
+    }
+
+    #[test]
+    fn sub_vectors() {
+        let vec1 = Vector {values : vec![1.,1.]};
+        let vec2 = Vector {values : vec![1.,2.]};
+        assert_eq!(vec1 - vec2, Ok(Vector{values : vec![0., -1.]}))
+    }
+
+    #[test]
+    fn mul_vectors() {
+        let vec1 = Vector {values : vec![1.,1.]};
+        let vec2 = Vector {values : vec![1.,2.]};
+        assert_eq!(vec1 * vec2, Ok(3.))
     }
 }

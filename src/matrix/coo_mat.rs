@@ -33,7 +33,7 @@ impl CooMat {
             result.values.push(*self.values.get(&(*r,*c)).unwrap());
             non_null_so_far += 1;
         }
-        if keys.len() != 0 {
+        if !keys.is_empty() {
             result.rows_index.push(non_null_so_far);
         }
         result

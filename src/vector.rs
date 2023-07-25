@@ -9,6 +9,10 @@ impl Vector {
     pub fn len(&self) -> usize {
         self.values.len()
     }
+
+    pub fn is_empty(self) -> bool {
+        self.values.is_empty()
+    }
     
     pub fn norm(&self) -> f64 {
         let mut sum = 0.;
@@ -77,7 +81,7 @@ impl Mul<f64> for Vector {
     fn mul(self, other: f64) -> Self::Output {
         let mut result = self.clone();
         for i in 0..self.len() {
-            result.values[i] = other * result.values[i];
+            result.values[i] *= other;
         }
         result
     }

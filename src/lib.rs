@@ -60,4 +60,20 @@ mod tests {
         let vec2 = Vector {values : vec![1.,2.]};
         assert_eq!(vec1 * vec2, Ok(3.))
     }
+
+    #[test]
+    fn vector0() {
+        assert_eq!(Vector::null(2), Vector { values : vec![0.;2] })
+    }
+
+    #[test]
+    fn minres_solver() {
+        let mut a = CooMat::new(2, 2);
+        a.add(0, 0, 2.);
+        a.add(1, 1, 2.);
+        let a = a.to_csr();
+        let b = Vector { values : vec![1., 2.] };
+        let res = a.minres(b, 0.01);
+        assert_eq!(res.unwrap(),Vector { values : vec![0.5,1.] })
+    }
 }

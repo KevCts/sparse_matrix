@@ -1,8 +1,26 @@
 use std::ops:: {Add, Sub, Mul};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Vector {
     pub values : Vec<f64>
+}
+
+impl Vector {
+    pub fn len(&self) -> usize {
+        self.values.len()
+    }
+    
+    pub fn norm(&self) -> f64 {
+        let mut sum = 0.;
+        for x in self.values.iter() {
+            sum += x*x;
+        }
+        sum.sqrt()
+    }
+
+    pub fn null(n : usize) -> Vector {
+        Vector { values : vec![0.;n] }
+    }
 }
 
 impl Add for Vector {
@@ -50,5 +68,17 @@ impl Mul for Vector {
         } else {
             Err("Wrong shapes")
         }
+    }
+}
+
+impl Mul<f64> for Vector {
+    type Output = Vector;
+
+    fn mul(self, other: f64) -> Self::Output {
+        let mut result = self.clone();
+        for i in 0..self.len() {
+            result.values[i] = other * result.values[i];
+        }
+        result
     }
 }

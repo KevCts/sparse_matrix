@@ -2,13 +2,33 @@ use std::ops::Mul;
 
 use crate::vector::Vector;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct CsrMat {
     pub rows            : usize,
     pub columns         : usize,
     pub values          : Vec<f64>,
     pub columns_index   : Vec<usize>,
     pub rows_index      : Vec<usize> 
+}
+
+impl CsrMat {
+    pub fn minres(self, b : Vector, relative_eps : f64) -> Result<Vector, &'static str> {
+        let mut r = b.clone();
+        let eps = relative_eps * b.norm();
+        let mut x = Vector::null(b.len());
+        let mut alpha;
+        let mut ar;
+        let mut arnorm;
+        while r.clone().norm() > eps {
+            ar = (self.clone() * r.clone())?;
+            arnorm = ar.clone().norm();
+            alpha = (r.clone() * ar)? / arnorm / arnorm;
+            x = (x + (r.clone() * alpha))?;
+            r = (b.clone() - (self.clone() * x.clone())?)?;
+            println!("{x:?}")
+        }
+        Ok(x)
+    }
 }
 
 impl Mul<Vector> for CsrMat {

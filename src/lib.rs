@@ -36,7 +36,7 @@ mod tests {
         mat.add(1, 0, 3.);
         mat.add(1, 1, 4.);
         let csrmat = mat.to_csr();
-        let res = csrmat * Vector { values : vec![0.,1.]};
+        let res = &csrmat * &Vector { values : vec![0.,1.]};
         assert_eq!(res, Ok(Vector { values : vec![2., 4.]}))
     }
 
@@ -44,21 +44,21 @@ mod tests {
     fn add_vectors() {
         let vec1 = Vector {values : vec![1.,1.]};
         let vec2 = Vector {values : vec![1.,2.]};
-        assert_eq!(vec1 + vec2, Ok(Vector{values : vec![2., 3.]}))
+        assert_eq!(&vec1 + &vec2, Ok(Vector{values : vec![2., 3.]}))
     }
 
     #[test]
     fn sub_vectors() {
         let vec1 = Vector {values : vec![1.,1.]};
         let vec2 = Vector {values : vec![1.,2.]};
-        assert_eq!(vec1 - vec2, Ok(Vector{values : vec![0., -1.]}))
+        assert_eq!(&vec1 - &vec2, Ok(Vector{values : vec![0., -1.]}))
     }
 
     #[test]
     fn mul_vectors() {
         let vec1 = Vector {values : vec![1.,1.]};
         let vec2 = Vector {values : vec![1.,2.]};
-        assert_eq!(vec1 * vec2, Ok(3.))
+        assert_eq!(&vec1 * &vec2, Ok(3.))
     }
 
     #[test]
@@ -68,12 +68,13 @@ mod tests {
 
     #[test]
     fn minres_solver() {
-        let mut a = CooMat::new(2, 2);
-        a.add(0, 0, 2.);
-        a.add(1, 1, 2.);
+        let mut a = CooMat::new(1000000, 1000000);
+        for i in 0..1000000{
+            a.add(i, i, 2.);
+        }
         let a = a.to_csr();
-        let b = Vector { values : vec![1., 2.] };
+        let b = Vector { values : vec![1.;1000000] };
         let res = a.minres(b, 0.01);
-        assert_eq!(res.unwrap(),Vector { values : vec![0.5,1.] })
+        assert_eq!(res.unwrap(),Vector { values : vec![0.5;1000000] })
     }
 }

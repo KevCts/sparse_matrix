@@ -10,7 +10,7 @@ impl Vector {
         self.values.len()
     }
 
-    pub fn is_empty(self) -> bool {
+    pub fn is_empty(&self) -> bool {
         self.values.is_empty()
     }
     
@@ -27,8 +27,8 @@ impl Vector {
     }
 }
 
-impl Add for Vector {
-    type Output = Result<Self, &'static str>;
+impl Add for &Vector {
+    type Output = Result<Vector, &'static str>;
 
     fn add(self, other: Self) -> Self::Output {
         if self.values.len() == other.values.len() {
@@ -43,8 +43,8 @@ impl Add for Vector {
     }
 }
 
-impl Sub for Vector {
-    type Output = Result<Self, &'static str>;
+impl Sub for &Vector {
+    type Output = Result<Vector, &'static str>;
 
     fn sub(self, other: Self) -> Self::Output {
         if self.values.len() == other.values.len() {
@@ -59,7 +59,7 @@ impl Sub for Vector {
     }
 }
 
-impl Mul for Vector {
+impl Mul for &Vector {
     type Output = Result<f64, &'static str>;
 
     fn mul(self, other: Self) -> Self::Output {
@@ -75,7 +75,7 @@ impl Mul for Vector {
     }
 }
 
-impl Mul<f64> for Vector {
+impl Mul<f64> for &Vector {
     type Output = Vector;
 
     fn mul(self, other: f64) -> Self::Output {

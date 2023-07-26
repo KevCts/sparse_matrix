@@ -19,22 +19,22 @@ impl CsrMat {
         let mut alpha;
         let mut ar;
         let mut arnorm;
-        while r.clone().norm() > eps {
-            ar = (self.clone() * r.clone())?;
+        while r.norm() > eps {
+            ar = (&self * &r)?;
             arnorm = ar.clone().norm();
-            alpha = (r.clone() * ar)? / arnorm / arnorm;
-            x = (x + (r.clone() * alpha))?;
-            r = (b.clone() - (self.clone() * x.clone())?)?;
+            alpha = (&r * &ar)? / arnorm / arnorm;
+            x = (&x + &(&r * alpha))?;
+            r = (&b - &(&self * &x)?)?;
             println!("{x:?}")
         }
         Ok(x)
     }
 }
 
-impl Mul<Vector> for CsrMat {
+impl Mul<&Vector> for &CsrMat {
     type Output = Result<Vector, &'static str>;
 
-    fn mul(self, rhs: Vector) -> Self::Output {
+    fn mul(self, rhs: &Vector) -> Self::Output {
         if self.columns != rhs.values.len() {
             Err("Invalid shapes")
         } else {

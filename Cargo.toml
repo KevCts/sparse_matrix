@@ -5,7 +5,7 @@ description = "A library to do linear algebra with sparse matrix"
 documentation = "https://docs.rs/sparse_matrix"
 readme = "README.md"
 license = "MIT"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 include = [
     "**/*.rs",

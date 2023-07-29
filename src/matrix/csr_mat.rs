@@ -21,10 +21,15 @@ impl CsrMat {
         let mut arnorm;
         while r.norm() > eps {
             ar = (&self * &r)?;
-            arnorm = ar.clone().norm();
+            println!("ar ok");
+            arnorm = ar.norm();
+            println!("arnorm ok");
             alpha = (&r * &ar)? / arnorm / arnorm;
+            println!("alpha ok");
             x = (&x + &(&r * alpha))?;
+            println!("x ok");
             r = (&b - &(&self * &x)?)?;
+            println!("r ok");
             println!("{x:?}")
         }
         Ok(x)

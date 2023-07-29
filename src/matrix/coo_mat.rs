@@ -15,7 +15,7 @@ impl CooMat {
     }
 
     pub fn add( &mut self, row : usize, col : usize, value : f64 ){
-        self.values.insert((row, col), value);
+        self.values.entry((row, col)).and_modify(|x| *x += value).or_insert(value);
     }
 
     pub fn to_csr(self) -> CsrMat{

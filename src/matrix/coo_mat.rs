@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use super::csr_mat::CsrMat;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct CooMat {
     pub rows    : usize,
     pub columns  : usize,
@@ -21,7 +21,9 @@ impl CooMat {
     }
 
     pub fn drop(&mut self, row : usize, col : usize){
-        self.values.remove(&(row, col));
+        if self.values.contains_key(&(row, col)){
+            self.values.remove(&(row, col));
+        }
     }
 
     pub fn to_csr(self) -> CsrMat{

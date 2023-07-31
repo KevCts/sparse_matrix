@@ -22,8 +22,6 @@ impl CsrMat {
         while r.norm() > eps {
             ar = (&self * &r)?;
             arnorm = ar.norm();
-            println!("{r:?}");
-            println!("{ar:?}");
             alpha = (&r * &ar)? / arnorm / arnorm;
             x = (&x + &(&r * alpha))?;
             r = (&b - &(&self * &x)?)?;

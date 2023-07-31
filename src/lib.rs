@@ -77,4 +77,12 @@ mod tests {
         let res = a.minres(b, 0.01);
         assert_eq!(res.unwrap(),Vector { values : vec![0.5;1000000] })
     }
+
+    #[test]
+    fn removing_a_value_from_a_coomat() {
+        let mut mat = CooMat::new(2, 2);
+        mat.add(1, 1, 123.);
+        mat.drop(1, 1);
+        assert_eq!(mat, CooMat::new(2, 2))
+    }
 }

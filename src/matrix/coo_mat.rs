@@ -20,6 +20,10 @@ impl CooMat {
         }
     }
 
+    pub fn drop(&mut self, row : usize, col : usize){
+        self.values.remove(&(row, col));
+    }
+
     pub fn to_csr(self) -> CsrMat{
         let mut keys : Vec<&(usize,usize)> = self.values.keys().collect();
         keys.sort_unstable();

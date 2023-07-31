@@ -42,7 +42,7 @@ impl CooMat {
 
     pub fn drop_col(&mut self, col: usize){
         for i in 0..self.rows {
-            self.drop(col, i);
+            self.drop(i, col);
         }
         for j in col..self.columns{
             for i in 0..self.rows{

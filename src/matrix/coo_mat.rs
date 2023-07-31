@@ -26,6 +26,34 @@ impl CooMat {
         }
     }
 
+    pub fn drop_row(&mut self, row : usize){
+        for i in 0..self.columns {
+            self.drop(row, i);
+        }
+        for i in row..self.rows{
+            for j in 0..self.columns{
+                if self.values.contains_key(&(i, j)){
+                    self.values.insert((i-1, j), self.values[&(i, j)]);
+                    self.values.remove(&(i, j));
+                }
+            }
+        }
+    }
+
+    pub fn drop_col(&mut self, col: usize){
+        for i in 0..self.rows {
+            self.drop(col, i);
+        }
+        for j in col..self.columns{
+            for i in 0..self.rows{
+                if self.values.contains_key(&(i, j)){
+                    self.values.insert((i, j-1), self.values[&(i, j)]);
+                    self.values.remove(&(i, j));
+                }
+            }
+        }
+    }
+
     pub fn to_csr(self) -> CsrMat{
         let mut keys : Vec<&(usize,usize)> = self.values.keys().collect();
         keys.sort_unstable();

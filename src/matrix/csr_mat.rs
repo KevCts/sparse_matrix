@@ -12,7 +12,7 @@ pub struct CsrMat {
 }
 
 impl CsrMat {
-    pub fn minres(self, b : Vector, relative_eps : f64) -> Result<Vector, &'static str> {
+    pub fn minres(&self, b : &Vector, relative_eps : f64) -> Result<Vector, &'static str> {
         let mut r = b.clone();
         let eps = relative_eps * b.norm();
         let mut x = Vector::null(b.len());
@@ -20,11 +20,11 @@ impl CsrMat {
         let mut ar;
         let mut arnorm;
         while r.norm() > eps {
-            ar = (&self * &r)?;
+            ar = (self * &r)?;
             arnorm = ar.norm();
             alpha = (&r * &ar)? / arnorm / arnorm;
             x = (&x + &(&r * alpha))?;
-            r = (&b - &(&self * &x)?)?;
+            r = (b - &(self * &x)?)?;
         }
         Ok(x)
     }

@@ -74,8 +74,8 @@ mod tests {
         }
         let a = a.to_csr();
         let b = Vector { values : vec![1.;1000000] };
-        let res = a.minres(b, 0.01);
-        assert_eq!(res.unwrap(),Vector { values : vec![0.5;1000000] })
+        let res = &a.minres(&b, 0.01).unwrap();
+        assert_eq!(*res,Vector { values : vec![0.5;1000000] })
     }
 
     #[test]

@@ -54,7 +54,7 @@ impl CooMat {
         }
     }
 
-    pub fn to_csr(self) -> CsrMat{
+    pub fn to_csr(&self) -> CsrMat{
         let mut keys : Vec<&(usize,usize)> = self.values.keys().collect();
         keys.sort_unstable();
         let mut result = CsrMat { rows : self.rows, columns : self.columns, values : vec![], columns_index : vec![], rows_index : vec![0] };

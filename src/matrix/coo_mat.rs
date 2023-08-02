@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, ops::{Add, AddAssign}};
 
 use super::csr_mat::CsrMat;
 
@@ -9,12 +9,32 @@ pub struct CooMat {
     pub values  : HashMap<(usize, usize), f64> 
 }
 
+impl Add for &CooMat {
+    type Output = CooMat;
+
+    fn add(self, other: Self) -> Self::Output {
+        let mut result = self.clone();
+        for ((r, c), value) in &other.values {
+            result.add_value(*r, *c, *value);
+        }
+        result
+    }
+}
+
+impl AddAssign for CooMat {
+    fn add_assign(&mut self, other: Self) {
+        for ((r, c), value) in &other.values {
+            self.add_value(*r, *c, *value);
+        }
+    }
+}
+
 impl CooMat {
     pub fn new(r : usize, c : usize) -> CooMat{
         CooMat { rows: r, columns: c, values: HashMap::new() }
     }
 
-    pub fn add( &mut self, row : usize, col : usize, value : f64 ){
+    pub fn add_value( &mut self, row : usize, col : usize, value : f64 ){
         if value != 0. {
             self.values.entry((row, col)).and_modify(|x| *x += value).or_insert(value);
         }

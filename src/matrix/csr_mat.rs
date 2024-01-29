@@ -1,8 +1,9 @@
 use std::ops::Mul;
 
 use crate::vector::Vector;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct CsrMat {
     pub rows            : usize,
     pub columns         : usize,

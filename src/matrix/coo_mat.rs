@@ -1,8 +1,9 @@
 use std::{collections::HashMap, ops::{Add, AddAssign}};
 
 use super::csr_mat::CsrMat;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct CooMat {
     pub rows    : usize,
     pub columns  : usize,

@@ -1,6 +1,7 @@
 use std::ops:: {Add, Sub, Mul};
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub struct Vector {
     pub values : Vec<f64>
 }

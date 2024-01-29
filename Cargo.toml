@@ -5,7 +5,7 @@ description = "A library to do linear algebra with sparse matrix"
 documentation = "https://docs.rs/sparse_matrix"
 readme = "README.md"
 license = "MIT"
-version = "0.5.0"
+version = "0.6.0"
 edition = "2021"
 include = [
     "**/*.rs",
@@ -15,3 +15,4 @@ include = [
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+serde = { version = "1.0.196", features = ["derive"] }

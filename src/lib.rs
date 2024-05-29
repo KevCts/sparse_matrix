@@ -85,4 +85,17 @@ mod tests {
         mat.drop(1, 1);
         assert_eq!(mat, CooMat::new(2, 2))
     }
+
+    #[test]
+    fn matrix_multiplication(){
+        let mut mat1 = CooMat::new(2,2);
+        mat1.add_value(1, 0, 3.);
+        mat1.add_value(1, 1, 4.);
+        mat1.add_value(0, 0, 1.);
+        mat1.add_value(0, 1, 2.);
+        let mut mat2 = CooMat::new(2,2);
+        mat2.add_value(0,0,1.);
+        mat2.add_value(1,1,1.);
+        assert_eq!(&mat1 * &mat2, mat1)
+    }
 }

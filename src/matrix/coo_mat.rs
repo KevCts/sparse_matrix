@@ -1,4 +1,4 @@
-use std::{collections::HashMap, ops::{Add, AddAssign}};
+use std::{collections::HashMap, ops::{Add, AddAssign, Mul}};
 
 use super::csr_mat::CsrMat;
 use serde::{Serialize, Deserialize};
@@ -18,6 +18,37 @@ impl Add for &CooMat {
         for ((r, c), value) in &other.values {
             result.add_value(*r, *c, *value);
         }
+        result
+    }
+}
+
+impl Mul for &CooMat {
+    type Output = CooMat;
+
+    fn mul(self, other: Self) -> Self::Output {
+        let r1 = self.rows;
+        let c1r1 = self.columns;
+        let c2 = other.columns;
+        let mut result = CooMat::new(r1, c2);
+
+        for i in 0..r1 {
+            for j in 0..c2 {
+                let mut acc = 0.;
+                for k in 0..c1r1 {
+                    acc +=
+                    match &self.values.get(&(i,k)) {
+                        Some(&a) => 
+                        match &other.values.get(&(k,j)) {
+                            Some(&b) => a * b,
+                            _ => 0.,
+                        }
+                        _ => 0.,
+                    };
+                }
+                result.add_value(i,j,acc);
+            }
+        }
+
         result
     }
 }

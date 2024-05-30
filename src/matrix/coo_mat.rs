@@ -106,6 +106,14 @@ impl CooMat {
         }
     }
 
+    pub fn transposed(&self) -> CooMat {
+        let mut output = CooMat::new(self.columns,self.rows);
+        for ((r, c), value) in &self.values {
+            output.add_value(*c, *r, *value);
+        }
+        output
+    }
+
     pub fn to_csr(&self) -> CsrMat{
         let mut keys : Vec<&(usize,usize)> = self.values.keys().collect();
         keys.sort_unstable();

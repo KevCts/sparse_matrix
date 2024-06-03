@@ -113,4 +113,15 @@ mod tests {
         mat2.add_value(1, 0, 2.);
         assert_eq!(mat1.transposed(), mat2);
     }
+
+    #[test]
+    fn identity(){
+        let mut mat1 = CooMat::new(2,2);
+        mat1.add_value(1, 0, 3.);
+        mat1.add_value(1, 1, 4.);
+        mat1.add_value(0, 0, 1.);
+        mat1.add_value(0, 1, 2.);
+        let mat2 = CooMat::identity(2);
+        assert_eq!(&mat1 * &mat2, mat1)
+    }
 }

@@ -66,6 +66,14 @@ impl CooMat {
         CooMat { rows: r, columns: c, values: HashMap::new() }
     }
 
+    pub fn identity(n : usize) -> CooMat{
+        let mut id = CooMat::new(n,n);
+        for i in 0..n {
+            id.add_value(i,i,1.);
+        }
+        id
+    }
+
     pub fn add_value( &mut self, row : usize, col : usize, value : f64 ){
         if value != 0. {
             self.values.entry((row, col)).and_modify(|x| *x += value).or_insert(value);

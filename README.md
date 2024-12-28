@@ -1,5 +1,5 @@
 # sparse_matrix
-A library to do solve sparse algebra problems.
+A library to solve sparse algebra problems.
 
 ## How is it meant to be used ?
 
